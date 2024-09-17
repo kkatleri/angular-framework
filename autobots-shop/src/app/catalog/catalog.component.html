@@ -1,10 +1,10 @@
 <div class="container">
   <div class="filters">
-    <a class="button" (click)="setFilter('Heads')">Heads</a>
-    <a class="button" (click)="setFilter('Arms')">Arms</a>
-    <a class="button" (click)="setFilter('Torsos')">Torsos</a>
-    <a class="button" (click)="setFilter('Bases')">Bases</a>
-    <a class="button" (click)="setFilter('')">All</a>
+    <a routerLink="/catalog/Heads">Heads</a>
+    <a routerLink="/catalog/Arms">Arms</a>
+    <a routerLink="/catalog/Torsos">Torsos</a>
+    <a routerLink="/catalog/Bases">Bases</a>
+    <a [routerLink]="['/catalog','']">All</a>
   </div>
 
   <ul class="products">

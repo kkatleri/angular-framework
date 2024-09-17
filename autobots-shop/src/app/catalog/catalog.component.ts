@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product.model';
 import { CartService } from '../cart/cart.service';
 import { ProductService } from './product.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'bot-catalog',
@@ -10,15 +11,21 @@ import { ProductService } from './product.service';
 })
 export class CatalogComponent implements OnInit {
 
-  products: IProduct[];
-  filter: string;
+  products: IProduct[] = [];
+  filter: string = "";
 
-  constructor(private cartSvc: CartService, private productSvc: ProductService) { }
+  constructor(
+    private cartSvc: CartService, 
+    private productSvc: ProductService, 
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.filter = "";
     this.productSvc.getProducts().subscribe(products => {
       this.products = products;
+    })
+    this.route.params.subscribe((params)=>{
+      this.filter = params['filter'];
     })
   }
 
@@ -34,5 +41,6 @@ export class CatalogComponent implements OnInit {
   
   addToCart(product: IProduct){
     this.cartSvc.add(product);
+    this.router.navigate(['/cart']);
   }
 }
