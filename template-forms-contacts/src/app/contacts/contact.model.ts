@@ -2,10 +2,12 @@ export interface Contact {
   id: string,
   firstName: string,
   lastName: string,
-  dateOfBirth: Date | null,
+  dateOfBirth: string,
   favoritesRanking: number | null,
+  personal: boolean,
   phone: Phone,
   address: Address,
+  notes: string
 }
 
 export interface Phone {
@@ -20,3 +22,15 @@ export interface Address {
   postalCode: string,
   addressType: string,
 }
+
+export const phoneTypes = [
+  { value: 'home', label: 'Home' },
+  { value: 'work', label: 'Work' },
+  { value: 'mobile', label: 'Mobile' },
+]
+
+export const addressTypes = [
+  { value: 'home', label: 'Home' },
+  { value: 'work', label: 'Work' },
+  { value: 'Other', label: 'Other' },
+]
