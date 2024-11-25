@@ -6,9 +6,10 @@ export class InMemoryContactsApi implements InMemoryDbService {
     let contacts: Contact[] = [
       {
         id: '5CehW',
+        profileIcon: '',
         firstName: 'Percival',
         lastName: 'Doodleplumb',
-        dateOfBirth: new Date('1994/05/05').toISOString().split('T')[0],
+        dateOfBirth: new Date('1994/05/05'),
         favoritesRanking: 0,
         personal: false,
         phone: { phoneNumber: '555-765-4321', phoneType: 'mobile' },
@@ -23,9 +24,10 @@ export class InMemoryContactsApi implements InMemoryDbService {
       },
       {
         id: 'A6rwe',
+        profileIcon: '',
         firstName: 'Mortimer',
         lastName: 'Flungford',
-        dateOfBirth: new Date('1988/10/05').toISOString().split('T')[0],
+        dateOfBirth: new Date('1988/10/05'),
         favoritesRanking: 0,
         personal: false,
         phone: { phoneNumber: '555-877-5678', phoneType: 'mobile' },
@@ -40,9 +42,10 @@ export class InMemoryContactsApi implements InMemoryDbService {
       },
       {
         id: '3bNGA',
+        profileIcon: '',
         firstName: 'Wanda',
         lastName: 'Giggleworth',
-        dateOfBirth: new Date('1986/11/08').toISOString().split('T')[0],
+        dateOfBirth: new Date('1986/11/08'),
         favoritesRanking: 1,
         personal: false,
         phone: { phoneNumber: '555-123-4567', phoneType: 'mobile' },

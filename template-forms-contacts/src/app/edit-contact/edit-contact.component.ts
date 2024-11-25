@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { addressTypes, Contact, phoneTypes } from '../contacts/contact.model';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ContactsService } from '../contacts/contacts.service';
-import { delay } from 'rxjs';
 import { RestrictedWordsValidator } from '../directive/restricted-words-validator.directive';
+import { DateValueAccessorDirective } from '../date-value-accessor/date-value-accessor.directive';
+import { ProfileIconSelectorComponent } from "../profile-icon-selector/profile-icon-selector.component";
 
 @Component({
-  imports: [CommonModule, FormsModule, RestrictedWordsValidator],
+  imports: [CommonModule, FormsModule, RestrictedWordsValidator, DateValueAccessorDirective, ProfileIconSelectorComponent],
   standalone: true,
   templateUrl: './edit-contact.component.html',
   styleUrls: ['./edit-contact.component.css']
@@ -23,9 +24,10 @@ export class EditContactComponent implements OnInit {
 
   contact: Contact = {
     id: '',
+    profileIcon: '',
     firstName: '',
     lastName: '',
-    dateOfBirth: '',
+    dateOfBirth: null,
     favoritesRanking: 0,
     personal: false,
     phone: {
