@@ -24,15 +24,17 @@
     </section>
     <section>
       <nav>Phone</nav>
-      <div class="flex-column" ngModelGroup="phone">
-        <div class="flex-group">
-          <input placeholder="Phone" [(ngModel)]="contact.phone.phoneNumber" name="phoneNumber" />
-          <img src="/assets/plus-grey-blue.png" class="add" />
-        </div>
-        <div class="radio">
-          <span *ngFor="let phoneType of phoneTypes">
-            <input type="radio" [value]="phoneType.value" [(ngModel)]="contact.phone.phoneType" name="phoneType"> {{phoneType.label}}
-          </span>
+      <div class="flex-column" ngModelGroup="phones">
+        <div class="flex-column" *ngFor="let phone of contact.phones let i=index" >
+          <div class="flex-group">
+            <input placeholder="Phone" [(ngModel)]="phone.phoneNumber" name="phoneNumber{{i}}" />
+            <img *ngIf="i==contact.phones.length-1" src="/assets/plus-grey-blue.png" class="add"  (click)="addPhone()"/>
+          </div>
+          <div class="radio">
+            <span *ngFor="let phoneType of phoneTypes">
+              <input type="radio" [value]="phoneType.value" [(ngModel)]="phone.phoneType" name="phoneType{{i}}"> {{phoneType.label}}
+            </span>
+          </div>
         </div>
       </div>
     </section>
