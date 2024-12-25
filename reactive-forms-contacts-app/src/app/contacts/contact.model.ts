@@ -1,11 +1,15 @@
+import { tick } from "@angular/core/testing";
+
 export interface Contact {
   id: string,
   firstName: string,
   lastName: string,
   dateOfBirth: Date | null,
   favoritesRanking: number | null,
+  personal: boolean
   phone: Phone,
   address: Address,
+  notes: string
 }
 
 export interface Phone {
@@ -20,3 +24,15 @@ export interface Address {
   postalCode: string,
   addressType: string,
 }
+
+export const phoneTypes=[
+  {name: "mobile", title: "Mobile"},
+  {name: "work", title: "Work"},
+  {name: "other", title: "Other"}
+]
+
+export const addressTypes=[
+  {name: "home", title: "Home"},
+  {name: "work", title: "Work"},
+  {name: "other", title: "Other"}
+]

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
+import { addressTypes, phoneTypes } from '../contacts/contact.model';
 
 @Component({
   templateUrl: './edit-contact.component.html',
@@ -9,12 +10,16 @@ import { ContactsService } from '../contacts/contacts.service';
 })
 export class EditContactComponent implements OnInit {
   
+  phoneTypesValues=phoneTypes;
+  addressTypesValues=addressTypes;
+
   contactForm: FormGroup = this.formBuilder.nonNullable.group({
     id: '',
     firstName: '',
     lastName: '',
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
+    personal: false,
     phone: this.formBuilder.nonNullable.group({
       phoneNumber: '',
       phoneType: ''
@@ -25,7 +30,8 @@ export class EditContactComponent implements OnInit {
       state: '',
       postalCode: '',
       addressType: ''
-    })
+    }),
+    notes: ''
   });
 
   constructor(
@@ -45,6 +51,7 @@ export class EditContactComponent implements OnInit {
   }
 
   saveContact() {
+    console.log(this.contactForm.controls['favoritesRanking'].value, typeof this.contactForm.controls['favoritesRanking'].value);
     this.contactService.saveContact(this.contactForm.value).subscribe({
       next: () => this.router.navigate(['/contacts'])
     });
