@@ -6,9 +6,12 @@
     <section>
       <nav>Name/Info</nav>
       <div>
+        <profile-icon-selector formControlName="icon"/>
         <input formControlName="firstName" placeholder="First Name" />
+        <em *ngIf="firstName.touched && firstName.errors?.['required']">Plesse enter a first name</em>
+        <em *ngIf="firstName.touched && firstName.errors?.['minlength']">First name must be at least 3 characters.</em>
         <input formControlName="lastName" placeholder="Last Name" />
-        <input formControlName="dateOfBirth" placeholder="Date of Birth" />
+        <input formControlName="dateOfBirth" placeholder="Date of Birth" type="date"/>
         <div>
           <span>Favorites Ranking </span>
           <input type="range" min="0" max="5" formControlName="favoritesRanking" placeholder="Favorites Ranking" />
@@ -34,7 +37,7 @@
     <section>
       <nav>Address</nav>
       <div>
-        <div class="address" formGroupName="address">
+        <div class="address" formGroupName="address" [class.error]="address.dirty && address.invalid">
           <div class="flex-group">
             <input formControlName="streetAddress" placeholder="Address" />
             <img src="/assets/plus-grey-blue.png" class="add" />
@@ -46,17 +49,19 @@
             <option *ngFor="let addressType of addressTypesValues" [value]="addressType.name">{{addressType.title}}</option>
           </select>
         </div>
+        <em *ngIf="address.dirty && address.invalid">Invalid address</em>
       </div>
     </section>
     <section>
       <nav>Notes</nav>
       <div>
-        <textarea formControlName="notes" placeholder="Notes"></textarea>
+        <textarea formControlName="notes" [class.error]="notes.invalid" placeholder="Notes"></textarea>
+        <em *ngIf="notes.errors?.['restrictedWords']"> Restricted words found : {{ notes.errors?.['restrictedWords'] }}</em>
       </div>
     </section>
     <div class="buttons">
       <button class="secondary">Cancel</button>
-      <button type="submit" class="primary">Save</button>
+      <button type="submit" class="primary" [disabled]="contactForm.invalid">Save</button>
     </div>
   </form>
 </div>

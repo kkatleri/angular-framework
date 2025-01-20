@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 import { addressTypes, phoneTypes } from '../contacts/contact.model';
+import { restrictedWords } from '../restricted-words.validator';
 
 @Component({
   templateUrl: './edit-contact.component.html',
@@ -15,7 +16,8 @@ export class EditContactComponent implements OnInit {
 
   contactForm: FormGroup = this.formBuilder.nonNullable.group({
     id: '',
-    firstName: '',
+    icon: '',
+    firstName: ['', [Validators.required, Validators.minLength(3)]],
     lastName: '',
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
@@ -25,13 +27,13 @@ export class EditContactComponent implements OnInit {
       phoneType: ''
     }),
     address: this.formBuilder.nonNullable.group({
-      streetAddress: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      addressType: ''
+      streetAddress: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      addressType: ['', Validators.required]
     }),
-    notes: ''
+    notes: ['', restrictedWords(['foo', 'bar'])]
   });
 
   constructor(
@@ -51,9 +53,21 @@ export class EditContactComponent implements OnInit {
   }
 
   saveContact() {
-    console.log(this.contactForm.controls['favoritesRanking'].value, typeof this.contactForm.controls['favoritesRanking'].value);
+    console.log(this.contactForm.controls['dateOfBirth'].value, typeof this.contactForm.controls['dateOfBirth'].value);
     this.contactService.saveContact(this.contactForm.value).subscribe({
       next: () => this.router.navigate(['/contacts'])
     });
+  }
+
+  get firstName() { 
+    return this.contactForm.controls['firstName'];
+  }
+
+  get notes() { 
+    return this.contactForm.controls['notes'];
+  }
+
+  get address() {
+    return this.contactForm.controls['address'];
   }
 }
