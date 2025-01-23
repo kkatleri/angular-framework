@@ -22,15 +22,17 @@
     </section>
     <section>
       <nav>Phone</nav>
-      <div formGroupName="phone" class="flex-column">
-        <div class="flex-group">
-          <input placeholder="Phone" />
-          <img src="/assets/plus-grey-blue.png" class="add" />
-        </div>
-        <div class="radio">
-          <span *ngFor="let phoneType of phoneTypesValues" >
-            <input type="radio" formControlName="phoneType" [value]="phoneType.name"> {{phoneType.title}}
-          </span>
+      <div formArrayName="phones">
+        <div *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i" class="flex-column">
+          <div class="flex-group">
+            <input placeholder="Phone" formControlName="phoneNumber"/>
+            <img src="/assets/plus-grey-blue.png" class="add" (click)="addPhone()"/>
+          </div>
+          <div class="radio">
+            <span *ngFor="let phoneType of phoneTypesValues" >
+              <input type="radio" formControlName="phoneType" [value]="phoneType.name"> {{phoneType.title}}
+            </span>
+          </div>
         </div>
       </div>
     </section>

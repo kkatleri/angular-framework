@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 import { addressTypes, phoneTypes } from '../contacts/contact.model';
@@ -22,10 +22,7 @@ export class EditContactComponent implements OnInit {
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
     personal: false,
-    phone: this.formBuilder.nonNullable.group({
-      phoneNumber: '',
-      phoneType: ''
-    }),
+    phones: this.formBuilder.nonNullable.array([this.createPhoneGroup()]),
     address: this.formBuilder.nonNullable.group({
       streetAddress: ['', Validators.required],
       city: ['', Validators.required],
@@ -48,15 +45,29 @@ export class EditContactComponent implements OnInit {
 
     this.contactService.getContact(contactId).subscribe(contact => {
       if(!contact) return;
+      for(let i=1; i<contact.phones.length; i++){
+        this.addPhone();
+      }
       this.contactForm.setValue(contact);
     });
   }
 
   saveContact() {
-    console.log(this.contactForm.controls['dateOfBirth'].value, typeof this.contactForm.controls['dateOfBirth'].value);
+    //console.log(this.contactForm.controls['dateOfBirth'].value, typeof this.contactForm.controls['dateOfBirth'].value);
     this.contactService.saveContact(this.contactForm.value).subscribe({
       next: () => this.router.navigate(['/contacts'])
     });
+  }
+
+  createPhoneGroup(){
+    return this.formBuilder.nonNullable.group({
+      phoneNumber: '',
+      phoneType: ''
+    });
+  }
+
+  addPhone(){
+    (this.contactForm.controls['phones'] as FormArray).push(this.createPhoneGroup());
   }
 
   get firstName() { 
@@ -69,5 +80,9 @@ export class EditContactComponent implements OnInit {
 
   get address() {
     return this.contactForm.controls['address'];
+  }
+
+  get phones() {
+    return this.contactForm.controls['phones'] as FormArray;
   }
 }
